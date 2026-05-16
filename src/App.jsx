@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
 import '@google/model-viewer';
+import { useEffect, useRef, useState } from 'react';
 
 const INITIAL_ORBIT = '0deg 75deg auto';
 
 // Only phi (vertical tilt) and radius (zoom) define "default view".
 // Theta (horizontal) is intentionally ignored — auto-rotate changes it constantly.
-const DEFAULT_PHI_RAD    = 75 * (Math.PI / 180);
-const PHI_TOLERANCE_RAD  =  8 * (Math.PI / 180); // ±8 degrees
-const RADIUS_TOLERANCE   = 0.15;                  // ±15% zoom
+const DEFAULT_PHI_RAD = 75 * (Math.PI / 180);
+const PHI_TOLERANCE_RAD = 8 * (Math.PI / 180); // ±8 degrees
+const RADIUS_TOLERANCE = 0.15;                  // ±15% zoom
 
 export default function App() {
-  const viewerRef       = useRef(null);
+  const viewerRef = useRef(null);
   const initialRadiusRef = useRef(null);
-  const checkTimerRef   = useRef(null);
-  const [loaded, setLoaded]       = useState(false);
+  const checkTimerRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
   const [showReset, setShowReset] = useState(false);
 
   useEffect(() => {
@@ -21,12 +21,12 @@ export default function App() {
     if (!viewer) return;
 
     const startRotation = () => viewer.setAttribute('auto-rotate', '');
-    const stopRotation  = () => viewer.removeAttribute('auto-rotate');
+    const stopRotation = () => viewer.removeAttribute('auto-rotate');
 
     const isAtDefault = () => {
       const { phi, radius } = viewer.getCameraOrbit();
       const r0 = initialRadiusRef.current;
-      const atPhi    = Math.abs(phi - DEFAULT_PHI_RAD) < PHI_TOLERANCE_RAD;
+      const atPhi = Math.abs(phi - DEFAULT_PHI_RAD) < PHI_TOLERANCE_RAD;
       const atRadius = r0 == null || Math.abs(radius - r0) / r0 < RADIUS_TOLERANCE;
       return atPhi && atRadius;
     };
@@ -93,6 +93,7 @@ export default function App() {
         auto-rotate-delay="0"
         camera-orbit={INITIAL_ORBIT}
         environment-image="neutral"
+        exposure="0.7"
         shadow-intensity="0.6"
       />
 
