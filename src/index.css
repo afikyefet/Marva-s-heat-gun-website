@@ -128,3 +128,142 @@ model-viewer::part(default-progress-bar) {
 #reset-btn:active {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* ── Hotspot dots ───────────────────────────────────────── */
+.hotspot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  position: relative;
+  animation: hotspot-pulse 2.8s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hotspot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+
+.hotspot:focus { outline: none; }
+
+@keyframes hotspot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.25); }
+  50%       { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+}
+
+/* ── Hotspot tooltip ────────────────────────────────────── */
+.hotspot-label {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.hotspot:hover .hotspot-label,
+.hotspot.active .hotspot-label {
+  opacity: 1;
+}
+
+.hotspot-line {
+  display: block;
+  text-align: center;
+}
+
+.hotspot-line + .hotspot-line {
+  margin-top: 2px;
+  opacity: 0.55;
+}
+
+/* ── Picker button ──────────────────────────────────────── */
+#picker-btn {
+  position: fixed;
+  top: calc(22px + env(safe-area-inset-top));
+  right: 20px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#picker-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#picker-btn.active {
+  border-color: rgba(255, 90, 0, 0.5);
+  color: rgba(255, 90, 0, 0.9);
+  background: rgba(255, 90, 0, 0.08);
+}
+
+/* ── Picker readout ─────────────────────────────────────── */
+#picker-readout {
+  position: fixed;
+  bottom: calc(72px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 16px;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.picker-row {
+  display: flex;
+  gap: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 120ms ease;
+}
+
+.picker-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.picker-key {
+  color: rgba(255, 90, 0, 0.8);
+  min-width: 24px;
+}
