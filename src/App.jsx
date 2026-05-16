@@ -87,6 +87,7 @@ export default function App() {
         ref={viewerRef}
         src="/model.glb"
         alt="Product 3D model"
+        loading="eager"
         camera-controls
         auto-rotate
         rotation-per-second="8deg"
